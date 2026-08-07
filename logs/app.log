@@ -1,0 +1,102 @@
+2026-08-06 00:18:35.758 | INFO     | __main__:init_db:28 - Neon database schema ensured (tables created if missing).
+2026-08-06 00:37:35.721 | INFO     | src.search.opensearch_client:get_opensearch_client:25 - Connected to OpenSearch cluster 'opensearch' v3.7.0
+2026-08-06 00:40:11.014 | INFO     | src.search.opensearch_client:get_opensearch_client:25 - Connected to OpenSearch cluster 'opensearch' v3.7.0
+2026-08-06 00:40:13.857 | INFO     | src.search.index_manager:create_index:75 - Created index 'arxiv-papers'
+2026-08-06 00:42:56.754 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 5 papers from arXiv category=cs.AI
+2026-08-06 00:43:04.544 | ERROR    | __main__:run:41 - Pipeline failed for 2608.04007v1: (psycopg2.errors.UndefinedColumn) column "summary" of relation "papers" does not exist
+LINE 1: INSERT INTO papers (arxiv_id, title, summary, authors, categ...
+                                             ^
+
+[SQL: INSERT INTO papers (arxiv_id, title, summary, authors, categories, primary_category, published, updated, pdf_url, doi, journal_ref, ingestion_status, created_at, updated_at) VALUES (%(arxiv_id)s, %(title)s, %(summary)s, %(authors)s, %(categories)s, %(primary_category)s, %(published)s, %(updated)s, %(pdf_url)s, %(doi)s, %(journal_ref)s, %(ingestion_status)s, %(created_at)s, %(updated_at)s) ON CONFLICT (arxiv_id) DO UPDATE SET title = %(param_1)s, summary = %(param_2)s, updated = %(param_3)s, updated_at = %(param_4)s]
+[parameters: {'arxiv_id': '2608.04007v1', 'title': 'TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning', 'summary': 'Tool-Integrated Reasoning (TIR) enables LLMs to solve complex tasks through iterative tool interactions. However, existing reinforcement learning met ... (984 characters truncated) ... nsive experiments on three benchmarks demonstrate the effectiveness of TurnSight. Our codes are available at https://github.com/quchangle1/TurnSight.', 'authors': '["Changle Qu", "Sunhao Dai", "Hengyi Cai", "Yuqi Zhou", "Xinran Chen", "Simon", "Jun Xu"]', 'categories': '["cs.CL", "cs.AI"]', 'primary_category': 'cs.CL', 'published': '2026-08-04T17:59:21+00:00', 'updated': '2026-08-04T17:59:21+00:00', 'pdf_url': 'https://arxiv.org/pdf/2608.04007v1', 'doi': None, 'journal_ref': None, 'ingestion_status': 'fetched', 'created_at': datetime.datetime(2026, 8, 5, 19, 13, 3, 268185), 'updated_at': datetime.datetime(2026, 8, 5, 19, 13, 3, 268185), 'param_1': 'TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning', 'param_2': 'Tool-Integrated Reasoning (TIR) enables LLMs to solve complex tasks through iterative tool interactions. However, existing reinforcement learning met ... (984 characters truncated) ... nsive experiments on three benchmarks demonstrate the effectiveness of TurnSight. Our codes are available at https://github.com/quchangle1/TurnSight.', 'param_3': '2026-08-04T17:59:21+00:00', 'param_4': datetime.datetime(2026, 8, 5, 19, 12, 56, 798106)}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-08-06 00:47:12.346 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 5 papers from arXiv category=cs.AI
+2026-08-06 00:47:18.144 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.04007v1 -> pdf_cache\2608.04007v1.pdf (756.4 KB)
+2026-08-06 01:27:14.447 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 1 papers from arXiv category=cs.AI
+2026-08-06 01:27:19.693 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.04007v1
+2026-08-06 01:36:47.470 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 1 papers from arXiv category=cs.AI
+2026-08-06 01:36:52.780 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.04007v1
+2026-08-06 01:37:36.251 | ERROR    | src.ingestion.docling_parser:parse:39 - Docling failed to parse 2608.04007v1: Conversion failed for: 2608.04007v1.pdf with status: failure. Errors: std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc
+2026-08-06 01:37:36.272 | ERROR    | src.ingestion.pipeline:run:41 - Pipeline failed for 2608.04007v1: Conversion failed for: 2608.04007v1.pdf with status: failure. Errors: std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc
+2026-08-06 01:37:38.108 | INFO     | src.ingestion.pipeline:run:46 - Pipeline run complete: {'fetched': 1, 'processed': 0, 'failed': ['2608.04007v1'], 'duration_seconds': 51.3}
+2026-08-06 01:45:52.485 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 1 papers from arXiv category=cs.AI
+2026-08-06 01:45:58.185 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.04007v1
+2026-08-06 01:48:07.784 | ERROR    | src.ingestion.docling_parser:parse:42 - Docling failed to parse 2608.04007v1: Conversion failed for: 2608.04007v1.pdf with status: failure. Errors: InvalidCxxCompiler: Compiler: cl is not found.
+
+Set TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS="+dynamo"
+; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc
+2026-08-06 01:48:07.821 | ERROR    | src.ingestion.pipeline:run:41 - Pipeline failed for 2608.04007v1: Conversion failed for: 2608.04007v1.pdf with status: failure. Errors: InvalidCxxCompiler: Compiler: cl is not found.
+
+Set TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS="+dynamo"
+; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc; std::bad_alloc
+2026-08-06 01:48:09.393 | INFO     | src.ingestion.pipeline:run:46 - Pipeline run complete: {'fetched': 1, 'processed': 0, 'failed': ['2608.04007v1'], 'duration_seconds': 137.63}
+2026-08-06 01:59:07.466 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 5 papers from arXiv category=cs.AI
+2026-08-06 01:59:13.147 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.04007v1
+2026-08-06 01:59:14.938 | INFO     | src.ingestion.docling_parser:parse:34 - Parsed 2608.04007v1: 11 pages, 50462 chars (pypdf, no OCR/tables)
+2026-08-06 01:59:16.119 | ERROR    | __main__:run:41 - Pipeline failed for 2608.04007v1: A string literal cannot contain NUL (0x00) characters.
+2026-08-06 01:59:22.089 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.04001v1 -> pdf_cache\2608.04001v1.pdf (1346.3 KB)
+2026-08-06 01:59:24.830 | INFO     | src.ingestion.docling_parser:parse:34 - Parsed 2608.04001v1: 59 pages, 201202 chars (pypdf, no OCR/tables)
+2026-08-06 01:59:38.768 | ERROR    | __main__:run:41 - Pipeline failed for 2608.04001v1: Instance <Chunk at 0x230cb9ac990> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-06 01:59:43.961 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.03983v1 -> pdf_cache\2608.03983v1.pdf (499.9 KB)
+2026-08-06 01:59:45.413 | INFO     | src.ingestion.docling_parser:parse:34 - Parsed 2608.03983v1: 9 pages, 44444 chars (pypdf, no OCR/tables)
+2026-08-06 01:59:51.337 | ERROR    | __main__:run:41 - Pipeline failed for 2608.03983v1: Instance <Chunk at 0x230cbb48fd0> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-06 02:00:01.064 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.03979v1 -> pdf_cache\2608.03979v1.pdf (10771.6 KB)
+2026-08-06 02:00:03.620 | INFO     | src.ingestion.docling_parser:parse:34 - Parsed 2608.03979v1: 20 pages, 69949 chars (pypdf, no OCR/tables)
+2026-08-06 02:00:14.555 | ERROR    | __main__:run:41 - Pipeline failed for 2608.03979v1: Instance <Chunk at 0x230cd4b6850> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-06 02:00:19.556 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.03972v1 -> pdf_cache\2608.03972v1.pdf (3393.8 KB)
+2026-08-06 02:00:21.429 | INFO     | src.ingestion.docling_parser:parse:34 - Parsed 2608.03972v1: 20 pages, 61461 chars (pypdf, no OCR/tables)
+2026-08-06 02:00:23.014 | ERROR    | __main__:run:41 - Pipeline failed for 2608.03972v1: A string literal cannot contain NUL (0x00) characters.
+2026-08-06 02:00:24.565 | INFO     | __main__:run:46 - Pipeline run complete: {'fetched': 5, 'processed': 0, 'failed': ['2608.04007v1', '2608.04001v1', '2608.03983v1', '2608.03979v1', '2608.03972v1'], 'duration_seconds': 77.67}
+2026-08-06 22:17:58.093 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 5 papers from arXiv category=cs.AI
+2026-08-06 22:18:29.941 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.05144v1 -> pdf_cache\2608.05144v1.pdf (2100.4 KB)
+2026-08-06 22:18:35.466 | INFO     | src.ingestion.docling_parser:parse:36 - Parsed 2608.05144v1: 29 pages, 123663 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:18:37.037 | ERROR    | __main__:run:41 - Pipeline failed for 2608.05144v1: A string literal cannot contain NUL (0x00) characters.
+2026-08-06 22:18:51.663 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.05141v1 -> pdf_cache\2608.05141v1.pdf (1017.7 KB)
+2026-08-06 22:18:55.877 | INFO     | src.ingestion.docling_parser:parse:36 - Parsed 2608.05141v1: 27 pages, 124281 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:20:14.579 | ERROR    | __main__:run:41 - Pipeline failed for 2608.05141v1: Instance <Chunk at 0x252bc3d03d0> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-06 22:20:42.411 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.05138v1 -> pdf_cache\2608.05138v1.pdf (1104.0 KB)
+2026-08-06 22:20:46.302 | INFO     | src.ingestion.docling_parser:parse:36 - Parsed 2608.05138v1: 15 pages, 67007 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:21:27.985 | ERROR    | __main__:run:41 - Pipeline failed for 2608.05138v1: Instance <Chunk at 0x252bc384990> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-06 22:22:15.373 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.05131v1 -> pdf_cache\2608.05131v1.pdf (4741.4 KB)
+2026-08-06 22:22:29.554 | INFO     | src.ingestion.docling_parser:parse:36 - Parsed 2608.05131v1: 17 pages, 54272 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:22:33.223 | ERROR    | __main__:run:41 - Pipeline failed for 2608.05131v1: A string literal cannot contain NUL (0x00) characters.
+2026-08-06 22:23:46.197 | INFO     | src.ingestion.pdf_downloader:download:72 - Downloaded 2608.05127v1 -> pdf_cache\2608.05127v1.pdf (1767.1 KB)
+2026-08-06 22:24:02.498 | INFO     | src.ingestion.docling_parser:parse:36 - Parsed 2608.05127v1: 42 pages, 108904 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:24:04.836 | ERROR    | __main__:run:41 - Pipeline failed for 2608.05127v1: A string literal cannot contain NUL (0x00) characters.
+2026-08-06 22:24:06.107 | INFO     | __main__:run:46 - Pipeline run complete: {'fetched': 5, 'processed': 0, 'failed': ['2608.05144v1', '2608.05141v1', '2608.05138v1', '2608.05131v1', '2608.05127v1'], 'duration_seconds': 373.83}
+2026-08-06 22:30:26.500 | INFO     | src.ingestion.arxiv_client:fetch_recent:106 - Fetched 5 papers from arXiv category=cs.AI
+2026-08-06 22:30:42.775 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.05144v1
+2026-08-06 22:30:46.995 | INFO     | src.ingestion.docling_parser:parse:35 - Parsed 2608.05144v1: 29 pages, 123662 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:32:12.504 | INFO     | src.embeddings.jina_embedder:embed_texts:50 - Embedded 62 texts via Jina (jina-embeddings-v3)
+2026-08-06 22:32:14.537 | INFO     | src.search.opensearch_client:get_opensearch_client:25 - Connected to OpenSearch cluster 'opensearch' v3.7.0
+2026-08-06 22:32:33.321 | INFO     | src.search.sync_pipeline:sync_paper_to_opensearch:66 - Indexed 62 chunks for 2608.05144v1 into OpenSearch
+2026-08-06 22:32:35.343 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.05141v1
+2026-08-06 22:32:40.926 | INFO     | src.ingestion.docling_parser:parse:35 - Parsed 2608.05141v1: 27 pages, 124281 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:34:23.617 | INFO     | src.embeddings.jina_embedder:embed_texts:50 - Embedded 56 texts via Jina (jina-embeddings-v3)
+2026-08-06 22:34:42.633 | INFO     | src.search.sync_pipeline:sync_paper_to_opensearch:66 - Indexed 56 chunks for 2608.05141v1 into OpenSearch
+2026-08-06 22:34:46.724 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.05138v1
+2026-08-06 22:34:52.495 | INFO     | src.ingestion.docling_parser:parse:35 - Parsed 2608.05138v1: 15 pages, 67007 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:35:45.982 | INFO     | src.embeddings.jina_embedder:embed_texts:50 - Embedded 40 texts via Jina (jina-embeddings-v3)
+2026-08-06 22:35:59.164 | INFO     | src.search.sync_pipeline:sync_paper_to_opensearch:66 - Indexed 40 chunks for 2608.05138v1 into OpenSearch
+2026-08-06 22:36:01.604 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.05131v1
+2026-08-06 22:36:07.864 | INFO     | src.ingestion.docling_parser:parse:35 - Parsed 2608.05131v1: 17 pages, 54268 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:36:38.989 | INFO     | src.embeddings.jina_embedder:embed_texts:50 - Embedded 28 texts via Jina (jina-embeddings-v3)
+2026-08-06 22:36:47.414 | INFO     | src.search.sync_pipeline:sync_paper_to_opensearch:66 - Indexed 28 chunks for 2608.05131v1 into OpenSearch
+2026-08-06 22:36:48.803 | DEBUG    | src.ingestion.pdf_downloader:download:53 - Cache hit for 2608.05127v1
+2026-08-06 22:36:53.250 | INFO     | src.ingestion.docling_parser:parse:35 - Parsed 2608.05127v1: 42 pages, 108889 chars (pypdf -- no OCR/tables/figures)
+2026-08-06 22:37:58.346 | INFO     | src.embeddings.jina_embedder:embed_texts:50 - Embedded 65 texts via Jina (jina-embeddings-v3)
+2026-08-06 22:38:18.677 | INFO     | src.search.sync_pipeline:sync_paper_to_opensearch:66 - Indexed 65 chunks for 2608.05127v1 into OpenSearch
+2026-08-06 22:38:18.793 | INFO     | __main__:run:46 - Pipeline run complete: {'fetched': 5, 'processed': 5, 'failed': [], 'duration_seconds': 474.77}
+2026-08-06 23:48:27.827 | INFO     | src.api.main:log_requests:29 - GET / -> 200 (39.0ms)
+2026-08-06 23:48:27.940 | INFO     | src.api.main:log_requests:29 - GET /favicon.ico -> 404 (0.2ms)
+2026-08-06 23:48:30.388 | INFO     | src.api.main:log_requests:29 - GET / -> 200 (1.0ms)
+2026-08-06 23:48:36.972 | INFO     | src.api.main:log_requests:29 - GET /docs -> 200 (0.3ms)
+2026-08-06 23:48:37.908 | INFO     | src.api.main:log_requests:29 - GET /openapi.json -> 200 (124.8ms)
+2026-08-06 23:59:15.948 | INFO     | src.api.main:log_requests:29 - GET /docs -> 200 (0.7ms)
+2026-08-06 23:59:16.254 | INFO     | src.api.main:log_requests:29 - GET /openapi.json -> 200 (92.4ms)
+2026-08-06 23:59:30.441 | INFO     | src.api.main:log_requests:29 - POST /rag/query -> 422 (22.8ms)
+2026-08-07 00:00:53.976 | INFO     | src.api.main:log_requests:29 - POST /rag/query -> 422 (0.7ms)
+2026-08-07 00:08:30.070 | INFO     | src.api.main:log_requests:29 - GET /docs -> 200 (1.3ms)
+2026-08-07 00:08:30.183 | INFO     | src.api.main:log_requests:29 - GET /openapi.json -> 200 (20.9ms)
+2026-08-07 00:08:43.779 | WARNING  | src.rag.tracing:__init__:36 - LangFuse start_span failed: 'Langfuse' object has no attribute 'start_span'
+2026-08-07 00:13:22.262 | WARNING  | src.rag.tracing:__init__:36 - LangFuse start_span failed: 'Langfuse' object has no attribute 'span'
