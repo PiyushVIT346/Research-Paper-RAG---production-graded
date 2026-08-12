@@ -1,5 +1,23 @@
 # ArXivIQ — intelligent search & Q&A over research papers
 
+<div align="center">
+
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![RAG](https://img.shields.io/badge/RAG-Retrieval%20Augmented%20Generation-purple)](#)
+[![OpenSearch](https://img.shields.io/badge/OpenSearch-Search%20Engine-005EB8?logo=opensearch&logoColor=white)](https://opensearch.org/)
+[![Redis](https://img.shields.io/badge/Redis-Cache-DC382D?logo=redis&logoColor=white)](https://redis.io/)
+[![Langfuse](https://img.shields.io/badge/Langfuse-LLM%20Observability-orange)](https://langfuse.com/)
+[![Jina AI](https://img.shields.io/badge/Jina%20AI-Embeddings-000000)](https://jina.ai/)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github&logoColor=white)](https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded)
+
+![GitHub stars](https://img.shields.io/github/stars/PiyushVIT346/Research-Paper-RAG---production-graded?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/PiyushVIT346/Research-Paper-RAG---production-graded?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/PiyushVIT346/Research-Paper-RAG---production-graded?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/PiyushVIT346/Research-Paper-RAG---production-graded?style=flat-square)
+
+
+</div>
+
 A production-grade Retrieval-Augmented Generation system over arXiv cs.AI
 research papers. Pure Python processes (no Docker anywhere) — everything
 runs as plain local/managed services talking over HTTP(S): Neon Postgres,
