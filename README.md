@@ -29,6 +29,12 @@ refinement, document grading, retries, caching, and full tracing.
 ---
 
 ## Architecture
+<table>
+  <tr>
+    <td><img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/architecture.png" width="1000"></td>
+   
+  </tr>
+</table>
 
 ```
 ┌─────────────┐   ┌──────────────┐   ┌───────────────┐   ┌──────────────┐
@@ -56,6 +62,52 @@ refinement, document grading, retries, caching, and full tracing.
         │        (LangFuse traces every step)   │
         └───────────────────────────────────────┘
 ```
+
+---
+
+## Implementation/ Work
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/Screenshot%202026-08-06%20224857.jpg" width="500">
+      <br>
+      <b>Neon Dashboard</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/Screenshot%202026-08-06%20230333.jpg" width="500">
+      <br>
+      <b>Opensearch Dashboard</b>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/Screenshot%202026-08-06%20231436.jpg" width="500">
+      <br>
+      <b>Opensearch Filtering (BM25 keyword search)</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/Screenshot%202026-08-06%20234917.jpg" width="500">
+      <br>
+      <b>API Setup</b>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/Screenshot%202026-08-09%20000100.jpg" width="500">
+      <br>
+      <b>LangFuse Dashboard</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/PiyushVIT346/Research-Paper-RAG---production-graded/blob/main/Screenshot%202026-08-06%20224734.jpg" width="500">
+      <br>
+      <b>Ingestion and chunking via Neon to OpenSearch</b>
+    </td>
+  </tr>
+</table>
 
 ---
 
