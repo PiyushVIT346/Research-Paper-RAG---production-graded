@@ -301,6 +301,19 @@ App Server 3 ─┤    Cache      │
 RAG pipelines can involve expensive operations such as embedding generation, vector retrieval, reranking, and LLM inference. If the same or similar request occurs repeatedly, Redis can return a previously computed result instead of executing the entire pipeline again.
 
 ---
+## Jina AI for Embeddings
+Jina AI provides embedding models designed to convert text, documents, queries, and other data into dense vector representations. In a RAG system, these embeddings allow semantically similar content to be retrieved even when the query and document use different words.
+### Traditional Embedding Methods
+|  Method	                        |  Approach	                          |  Limitation                                  |
+| --------------------------------- | ----------------------------------- | -------------------------------------------- |
+|TF-IDF	                           |  Word-frequency based	              | Doesn't understand semantic meaning          |
+|Bag of Words	                     |  Word occurrence/count	           | Ignores word relationships and context       |
+|Word2Vec	                        |  Word-level embeddings	           | Limited contextual understanding             |
+|GloVe	                           |  Global word co-occurrence	        | Mainly word-level representation             |
+|Traditional sentence embeddings	   |  Fixed pretrained representations	  | Often weaker for modern retrieval tasks      |
+|Open-source transformer embeddings |	Transformer-based	                 | Quality varies significantly between models  |
+
+---
 
 ## Langfuse
 Langfuse is an open-source LLM observability and tracing platform used to monitor, debug, and evaluate LLM and RAG applications. It provides visibility into the complete flow of a request—from the user query and retrieval step to prompt execution and final LLM response.
