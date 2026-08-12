@@ -157,7 +157,7 @@ refinement, document grading, retries, caching, and full tracing.
 
 ---
 
-## Setup (no Docker)
+## Setup 
 
 ```bash
 python3 -m venv venv
@@ -219,9 +219,102 @@ curl -X POST localhost:8000/rag/query \
      -H "Content-Type: application/json" \
      -d '{"query": "What is a dog?"}'
 ```
+---
+
+## Opensearch 
+OpenSearch is an open-source, distributed search and analytics engine that can work as the retrieval layer of a RAG pipeline. It supports traditional full-text search, vector/semantic search, and hybrid search in the same system.  
+OpenSearch can combine keyword search (BM25) and semantic/vector search through its hybrid-search functionality. This is useful because keyword search is good at exact terms, IDs, names, and technical terminology, while semantic search is better at understanding the meaning of a natural-language query.
+It also supports neural sparse search, which uses sparse representations with an inverted-index approach, providing a semantic-search alternative that can be more efficient than dense k-NN search in some workloads
+It can be more production-oriented than a simple setup
+
+| Feature                | Traditional RAG setup                   | OpenSearch                        |
+| ---------------------- | --------------------------------------- | --------------------------------- |
+| Keyword search         | BM25 separately                         | Built-in                          |
+| Vector search          | FAISS/vector DB                         | Built-in                          |
+| Hybrid search          | Often custom fusion                     | Built-in hybrid queries/pipelines |
+| Sparse semantic search | Usually additional component            | Built-in neural sparse search     |
+| Metadata filtering     | Custom implementation                   | Native filtering                   |
+| Scaling                | Requires architecture around components | Distributed search engine         |
+| Monitoring/analytics   | Additional tools                        | OpenSearch ecosystem              |
+| Search experimentation | Mostly code-based                       | Dashboards + query tools           |
+| Production search      | Multiple components                     | Unified search platform            |
+
+
+OpenSearch acts as the production-grade retrieval and search engine for RAG, combining BM25, vector and neural-sparse retrieval with hybrid ranking, filtering, scalability and observability, while OpenSearch Dashboards provides the UI to inspect, query, analyze and monitor that retrieval system.
 
 ---
 
+## Redis for Caching
+Redis is an in-memory data store commonly used in RAG systems to cache frequently accessed or expensive-to-compute data. It stores data primarily in RAM, making read/write operations extremely fast.
+Redis can cache things such as:
+
+Frequently asked questions and their answers
+- Embeddings
+- Retrieved document chunks
+- LLM responses
+- Session/conversation data
+- Intermediate RAG results
+
+| Feature             | Traditional Methods                 | Redis                                           |
+| ------------------- | ----------------------------------- | ----------------------------------------------- |
+| Storage             | Disk / database                     | Primarily in-memory                             |
+| Read/write speed    | Relatively slower                   | Extremely fast                                  |
+| Data structures     | Usually key-value/files             | Strings, Lists, Sets, Hashes, Sorted Sets, etc. |
+| Expiration          | Often manually implemented          | Built-in TTL                                    |
+| Concurrent access   | Depends on implementation           | Designed for high concurrency                   |
+| Distributed caching | Requires additional infrastructure | Supports distributed deployments                |
+| RAG suitability     | Requires custom integration         | Well suited for low-latency caching             |
+| Persistence         | Usually persistent by default       | Optional persistence                            |
+| Scalability         | Depends on storage system           | Horizontally scalable with Redis Cluster        |
+
+### Redis vs common alternatives
+
+1. Database caching
+
+Using PostgreSQL/MySQL directly for caching is possible, but database queries involve disk/storage and database processing overhead. Redis is optimized specifically for very fast in-memory access.
+
+2. File-based caching
+
+```
+Application → File System → Read/Write
+```
+This is simple but generally unsuitable for high-concurrency production RAG systems because disk I/O is slower and distributed access is more complicated.
+
+3. Python in-memory dictionaries
+```
+cache = {
+    "query": "answer"
+}
+```
+This is extremely simple and fast, but the cache exists only inside one application process. It is lost when the application restarts and is difficult to share across multiple application instances.
+
+### Redis provides a shared caching layer:
+```
+             ┌───────────────┐
+App Server 1 ─┤               │
+App Server 2 ─┤    Redis      │
+App Server 3 ─┤    Cache      │
+             └───────────────┘
+```
+### Why Redis is useful for RAG
+
+RAG pipelines can involve expensive operations such as embedding generation, vector retrieval, reranking, and LLM inference. If the same or similar request occurs repeatedly, Redis can return a previously computed result instead of executing the entire pipeline again.
+
+---
+
+## Langfuse
+Langfuse is an open-source LLM observability and tracing platform used to monitor, debug, and evaluate LLM and RAG applications. It provides visibility into the complete flow of a request—from the user query and retrieval step to prompt execution and final LLM response.
+It can track information such as:
+
+- LLM traces — Follow the complete execution flow.
+- Latency — Identify slow retrieval, reranking, or LLM operations.
+- Token usage & costs — Monitor LLM consumption.
+- Prompts & responses — Inspect inputs and generated outputs.
+- Evaluation — Measure and compare RAG/LLM performance.
+- Debugging — Identify where incorrect or low-quality responses originate.
+
+
+---
 ## Windows-specific notes (learned the hard way)
 
 If you're running this on Windows, a few real-world gotchas surfaced during setup that are worth knowing up front:
@@ -257,10 +350,3 @@ If you're running this on Windows, a few real-world gotchas surfaced during setu
 
 ---
 
-## Notes / production hardening ideas
-
-- Add Alembic migrations instead of `create_all` for schema evolution (currently, schema changes on an existing table require manual `drop_all`/`create_all`).
-- Add API-key auth middleware to FastAPI before exposing publicly.
-- Hybrid search fusion is client-side min-max normalization; if your OpenSearch has the Neural Search plugin, swap in its native `hybrid` query pipeline for server-side fusion.
-- Guardrail/refine/grade all call Gemini — consider a distilled classifier for the guardrail step alone to cut latency at scale.
-- Isolate all Python dependencies in a proper `venv` per-project (global installs can silently drift package versions, as happened with the LangFuse SDK during development).
